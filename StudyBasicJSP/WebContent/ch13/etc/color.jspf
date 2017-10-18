@@ -1,0 +1,5 @@
+<%	
+	String bodyback_c="#FAFFFF";
+   String body="url('../images/11.PNG') left top";
+   String value_c="#C5C0FF";
+%>
