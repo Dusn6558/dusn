@@ -15,6 +15,7 @@
 </head>
 <body>
 <%
+	request.setCharacterEncoding("utf-8");
 	String goods_kind = request.getParameter("goods_kind");
 	List<ShopdogDataBean> goodsLists = null;
 	ShopdogDataBean  goodsList = null;

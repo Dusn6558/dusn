@@ -104,6 +104,7 @@ try{
 		%>
 		<tr height="30" >
 		<td width="50" align="center"><%=++number %></td>
+
 		<td width="50" align="center"><%=goods.getGoods_kind()%></td>
 		<td width="150" align="center"><%=goods.getGoods_name()%></td>
 		<td width="50" align="center"><%=goods.getGoods_price()%></td>

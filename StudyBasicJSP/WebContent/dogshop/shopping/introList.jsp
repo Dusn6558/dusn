@@ -20,21 +20,21 @@ String goods_kindName="";
 try{
 ShopdogDBBean goodsProcess = ShopdogDBBean.getInstance();
 for(int i=1; i<=5;i++){
-	goodsLists = goodsProcess.getgoodss(i+"00", 3);
+	goodsLists = goodsProcess.getgoodss(i+"00",3);
 	if( goodsLists[0].getGoods_kind().equals("100")){
-		goods_kindName="문학";
+		goods_kindName="사료";
 	}else if( goodsLists[0].getGoods_kind().equals("200")){
-		goods_kindName="외국어";
+		goods_kindName="간식/영양제";
 	}else if( goodsLists[0].getGoods_kind().equals("300")){
-		goods_kindName="컴퓨터";
+		goods_kindName="장난감";
 	}else if( goodsLists[0].getGoods_kind().equals("400")){
-		goods_kindName="취미레져";
+		goods_kindName="샤워용품";
 	}else if( goodsLists[0].getGoods_kind().equals("500")){
-		goods_kindName="여행";
+		goods_kindName="기타용품";
 	}
 	%>
 	<br>
-	<font size="+1"><b><%=goods_kindName %>분류의 신간목록: 
+	<font size="+1"><b><%=goods_kindName %>분류의 최신목록: 
 	<a href="list.jsp?goods_kind=<%=goodsLists[0].getGoods_kind() %>">더보기</a>
 	</b><br></font>
 	<%

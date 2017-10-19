@@ -56,6 +56,7 @@ String goods_country = imageUp.getParameter("goods_country");
 String goods_content = imageUp.getParameter("goods_content");
 String discount_rate = imageUp.getParameter("discount_rate");
 
+
 goods.setGoods_kind(goods_kind);
 goods.setGoods_name(goods_name);
 goods.setGoods_price(Integer.parseInt(goods_price));

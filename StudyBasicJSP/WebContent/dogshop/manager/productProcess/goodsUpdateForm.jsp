@@ -34,7 +34,7 @@ try{
 		%>
 		<p>상품 수정</p>
 		<br>
-		<form method="post" action="GoodsupdatePro.jsp" 
+		<form method="post" action="goodsUpdatePro.jsp" 
 		name="writeform" enctype="multipart/form-data">
 		<table align="center">
 		<tr>
@@ -70,7 +70,7 @@ try{
 			<td width="400" align="left">
 			<input type="text" size="50" maxlength="50" name="goods_name"
 			value="<%=Goods.getGoods_name() %>">
-			<input type="hidden" name="Goods_id" value="<%=goods_id %>"></td>
+			<input type="hidden" name="goods_id" value="<%=goods_id %>"></td>
 		</tr>
 		<tr>
 			<td width="100" bgcolor="<%=value_c %>">가격</td>
@@ -112,7 +112,7 @@ try{
 		</tr>
 		<tr>
 			<td width="100" bgcolor="<%=value_c %>">내용</td>
-			<td width="400" align="left"><textarea rows="13" name="Goods_content" cols="40"><%=Goods.getGoods_content() %></textarea>
+			<td width="400" align="left"><textarea rows="13" name="goods_content" cols="40"><%=Goods.getGoods_content() %></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -123,7 +123,7 @@ try{
 		</tr>
 		<tr>
 			<td align="center" colspan="2" bgcolor="<%=value_c %>">
-			<input type="button" value="상품 수정" onclick="updateCheckForm(this.form)">
+			<input type="submit" value="상품 수정">
 			<input type="reset" value="다시 작성">
 			</td>
 		</tr>

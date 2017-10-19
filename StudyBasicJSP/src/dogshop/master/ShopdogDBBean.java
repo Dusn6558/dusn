@@ -71,20 +71,20 @@ public class ShopdogDBBean {
 		
 		try {
 			conn = getConnection();
-			sql="insert into goods values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			sql="insert into goods values(seq.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1,goods.getGoods_id());
-			pstmt.setString(2, goods.getGoods_kind());
-			pstmt.setString(3, goods.getGoods_name());
-			pstmt.setInt(4, goods.getGoods_price());
-			pstmt.setShort(5, goods.getGoods_count());
-			pstmt.setString(6,goods.getGoods_com());
-			pstmt.setString(7, goods.getGoods_date());
-			pstmt.setString(8, goods.getGoods_country());
-			pstmt.setString(9, goods.getGoods_image());
-			pstmt.setString(10, goods.getGoods_content());
-			pstmt.setByte(11, goods.getDiscount_rate());
-			pstmt.setTimestamp(12, goods.getReg_date());
+			
+			pstmt.setString(1, goods.getGoods_kind());
+			pstmt.setString(2, goods.getGoods_name());
+			pstmt.setInt(3, goods.getGoods_price());
+			pstmt.setShort(4, goods.getGoods_count());
+			pstmt.setString(5,goods.getGoods_com());
+			pstmt.setString(6, goods.getGoods_date());
+			pstmt.setString(7, goods.getGoods_country());
+			pstmt.setString(8, goods.getGoods_image());
+			pstmt.setString(9, goods.getGoods_content());
+			pstmt.setByte(10, goods.getDiscount_rate());
+			pstmt.setTimestamp(11, goods.getReg_date());
 			
 			pstmt.executeUpdate();
 			
@@ -187,17 +187,13 @@ public class ShopdogDBBean {
 		
 		try {
 			conn=getConnection();
-			sql="select * from goods where goods_kind = ? "
-					+ " order by reg_date desc limit ?,?";
+			
 			sql = "select * from "
-					+ "(select rowreg_date as rreg_date, bo.*"
-					+ " from (select * from goods order by reg_date desc) bo)"
-					+ " where rreg_date between ? and ?";
+					+ "(select reg_date from goods where goods_kind=? order by reg_date desc)"
+					+ " where rownum <= ?";
 			pstmt=conn.prepareStatement(sql);
-			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, goods_kind);
-			pstmt.setInt(2, 0);
-			pstmt.setInt(3, count);
+			pstmt.setInt(2, count);
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -282,7 +278,7 @@ public class ShopdogDBBean {
 		try {
 			conn=getConnection();
 			sql = "update goods set goods_kind=?, goods_name=?,goods_price=?,"
-					+ "goods_count=?,author=?,publishing_com=?, publishing_date=?,"
+					+ "goods_count=?,goods_com=?,goods_date=?, goods_country=?,"
 					+ "goods_image=?,goods_content=?,discount_rate=? "
 					+ "where goods_id=?";
 			pstmt=conn.prepareStatement(sql);

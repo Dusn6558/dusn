@@ -42,7 +42,7 @@ try{
 			<tr>
 				<td width="100" bgcolor="<%=value_c %>">상품명</td>
 				<td width="400" align="left">
-				<input type="text" size="50" maxlength="50" name="goods_title"></td>
+				<input type="text" size="50" maxlength="50" name="goods_name"></td>
 			</tr>
 			<tr>
 				<td width="100" bgcolor="<%=value_c %>">가격</td>
@@ -52,7 +52,7 @@ try{
 			<tr>
 				<td width="100" bgcolor="<%=value_c %>">수량</td>
 				<td width="400" align="left">
-				<input type="text" size="10" maxlength="5" name="goods_count">권</td>
+				<input type="text" size="10" maxlength="5" name="goods_count">개</td>
 			</tr>
 			<tr>
 				<td width="100" bgcolor="<%=value_c %>">제조 회사</td>
@@ -85,7 +85,7 @@ try{
 			</tr>
 			<tr>
 				<td align="right" colspan="2" bgcolor="<%=value_c %>">
-				<input type="button" value="상품 등록" onclick="checkForm(this.form)">
+				<input type="submit" value="상품 등록">
 				<input type="reset" value="다시 작성">
 				</td>
 			</tr>
