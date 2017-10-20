@@ -39,7 +39,7 @@
 %>
 <table>
 		<tr>
-			<td width="150" valign="top"><img src="../module/logo.png"
+			<td width="150" valign="top"><img src="../module/sunny.jpg"
 				border="0" width="150" height="120"></td>
 			<td><jsp:include page="../module/top.jsp" flush="false" /></td>
 		</tr>
@@ -87,7 +87,7 @@
 		</tr>
 		<tr>
 		<td width="150" valign="top">
-			<img src="../module/logo.png"border="0"width="150"height="120">
+			<img src="../module/sunny.jpg"border="0"width="150"height="120">
 		</td>
 		<td width="700" valign="top" bgcolor="#BDBDBD" >
 			<jsp:include page="../module/bottom.jsp" flush="false"/>

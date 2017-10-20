@@ -27,19 +27,16 @@ private static BuyDBBean instance = new BuyDBBean();
         return ds.getConnection();
     }
     
-    public List<String> getAccount(String id) throws Exception{
+    public List<String> getAccount(String buyer){
     	Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<String> accountList = null;
-        String sql = "";
         try {
             conn = getConnection();
-            sql = "select account, bank, name from "
-            		+ "member m inner join bank b on m.id = b.id"
-            		+ " where b.id = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
+                        
+            pstmt = conn.prepareStatement("select * from bank where name=?");
+            pstmt.setString(1, buyer);
             rs = pstmt.executeQuery();
             
             accountList = new ArrayList<String>();
@@ -104,18 +101,18 @@ private static BuyDBBean instance = new BuyDBBean();
             for(int i=0; i<lists.size();i++){
             	CartDataBean cart = lists.get(i);
             	
-            	sql = "insert into buy (buy_id,buyer,book_id,book_title,buy_price,buy_count,"
-            			+ "book_image,buy_date,account,deliveryName,deliveryTel,deliveryAddress)"
+            	sql = "insert into buy (buy_id,buyer,goods_id,goods_name,buy_price,buy_count,"
+            			+ "goods_image,buy_date,account,deliveryName,deliveryTel,deliveryAddress)"
             			+ " values(?,?,?,?,?,?,?,?,?,?,?,?)";
                 pstmt = conn.prepareStatement(sql);
             
                 pstmt.setLong(1, buyId);
                 pstmt.setString(2, id);
-                pstmt.setInt(3, cart.getBook_id());
-                pstmt.setString(4, cart.getBook_title());
+                pstmt.setInt(3, cart.getGoods_id());
+                pstmt.setString(4, cart.getGoods_name());
                 pstmt.setInt(5, cart.getBuy_price());
                 pstmt.setByte(6, cart.getBuy_count());
-                pstmt.setString(7, cart.getBook_image());
+                pstmt.setString(7, cart.getGoods_image());
                 pstmt.setTimestamp(8, reg_date);
                 pstmt.setString(9, account);
                 pstmt.setString(10, deliveryName);
@@ -124,18 +121,18 @@ private static BuyDBBean instance = new BuyDBBean();
                 pstmt.executeUpdate();
        
                 pstmt = conn.prepareStatement(
-                		"select book_count from book where book_id=?");
-                pstmt.setInt(1, cart.getBook_id());
+                		"select goods_count from goods where goods_id=?");
+                pstmt.setInt(1, cart.getGoods_id());
                 rs = pstmt.executeQuery();
                 rs.next();
                 
                 nowCount = (short)(rs.getShort(1) - cart.getBuy_count());
                 
-                sql = "update book set book_count=? where book_id=?";
+                sql = "update goods set goods_count=? where goods_id=?";
                 pstmt = conn.prepareStatement(sql);
            
                 pstmt.setShort(1, nowCount);
-    			pstmt.setInt(2, cart.getBook_id());
+    			pstmt.setInt(2, cart.getGoods_id());
                 
                 pstmt.executeUpdate(); 
             }
@@ -246,11 +243,11 @@ private static BuyDBBean instance = new BuyDBBean();
               buy = new BuyDataBean();
            	 
            	  buy.setBuy_id(rs.getLong("buy_id"));
-           	  buy.setBook_id(rs.getInt("book_id"));
-           	  buy.setBook_title(rs.getString("book_title"));
+           	  buy.setGoods_id(rs.getInt("goods_id"));
+           	  buy.setGoods_name(rs.getString("goods_name"));
            	  buy.setBuy_price(rs.getInt("buy_price"));
            	  buy.setBuy_count(rs.getByte("buy_count")); 
-           	  buy.setBook_image(rs.getString("book_image"));
+           	  buy.setGoods_image(rs.getString("goods_image"));
            	  buy.setSanction(rs.getString("sanction"));
            	 
            	  lists.add(buy);
@@ -290,11 +287,11 @@ private static BuyDBBean instance = new BuyDBBean();
            	 
            	  buy.setBuy_id(rs.getLong("buy_id"));
            	  buy.setBuyer(rs.getString("buyer"));
-           	  buy.setBook_id(rs.getInt("book_id"));
-           	  buy.setBook_title(rs.getString("book_title"));
+           	  buy.setGoods_id(rs.getInt("goods_id"));
+           	  buy.setGoods_name(rs.getString("goods_name"));
            	  buy.setBuy_price(rs.getInt("buy_price"));
            	  buy.setBuy_count(rs.getByte("buy_count")); 
-           	  buy.setBook_image(rs.getString("book_image"));
+           	  buy.setGoods_image(rs.getString("goods_image"));
            	  buy.setBuy_date(rs.getTimestamp("buy_date"));
            	  buy.setAccount(rs.getString("account"));
            	  buy.setDeliveryName(rs.getString("deliveryName"));

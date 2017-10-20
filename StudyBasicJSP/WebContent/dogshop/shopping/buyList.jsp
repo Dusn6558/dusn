@@ -1,19 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "ch14.bookshop.shopping.BuyDataBean" %>
-<%@ page import = "ch14.bookshop.shopping.BuyDBBean" %>
+<%@ page import = "dogshop.shopping.BuyDataBean" %>
+<%@ page import = "dogshop.shopping.BuyDBBean" %>
 <%@ page import = "java.util.List" %>
 <%@ page import = "java.text.NumberFormat" %>
+
 <%@ include file="../etc/color.jspf"%> 
-<html>
-<head>
-<title>Book Shopping Mall</title>
-<link href="../etc/style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
+
 <%
   String buyer = (String)session.getAttribute("id");
 %>
+<html>
+<head>
+<title>goods Shopping Mall</title>
+<link href="../etc/style.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="<%=bodyback_c%>">
 <%
 List<BuyDataBean> buyLists = null;
 BuyDataBean buyList = null;
@@ -32,10 +34,12 @@ if(session.getAttribute("id")==null){
    if(count == 0){
 %>
    <h3><b>구매목록</b></h3>
+   
    <table> 
      <tr><td align="center" >구매목록이 없습니다.</td> </tr>
    </table>
-      <input type="button" value="메인으로" onclick="javascript:window.location='shopMain.jsp'">
+      <input type="button" value="메인으로" 
+         onclick="javascript:window.location='shopMain.jsp'">
 <%
   }else{
     buyLists = buyProcess.getBuyList(buyer);
@@ -49,7 +53,9 @@ if(session.getAttribute("id")==null){
        if(i<buyLists.size()-1){
     	  BuyDataBean compare = buyLists.get(i+1);
     	  compareId = compare.getBuy_id();
-    	
+    		 
+    	  BuyDataBean pre = buyLists.get(buyLists.size()-2);
+    	  preId = pre.getBuy_id();
        }  	 
 %>
    <table> 
@@ -63,9 +69,9 @@ if(session.getAttribute("id")==null){
       <tr> 
         <td align="center"  width="150"><%=buyList.getBuy_id()%></td> 
         <td  width="300" align="left">
-           <img src="../../imageFile/<%=buyList.getBook_image()%>" 
+           <img src="../../imageFile/<%=buyList.getGoods_image()%>" 
                border="0" width="30" height="50" align="middle">
-             <%=buyList.getBook_title()%>
+             <%=buyList.getGoods_name()%>
         </td> 
         <td width="100">\<%=NumberFormat.getInstance().format(buyList.getBuy_price())%></td>
         <td width="50"><%=buyList.getBuy_count()%></td> 
@@ -75,13 +81,13 @@ if(session.getAttribute("id")==null){
        </td>
       </tr>
 <%
-    if( buyList.getBuy_id() != compareId || (i == buyLists.size()-1)  ) {
+    if( buyList.getBuy_id() != compareId || 
+      (i == buyLists.size()-1) && preId != buyList.getBuy_id() ) {
 %> 
       <tr>
        <td colspan="5" align="right">
-         <b>총 금액 : <font size="+1" color="red">\<%=NumberFormat.getInstance().format(total)%></font></b></td>
+         <b>총 금액 : \<%=NumberFormat.getInstance().format(total)%></b></td>
       </tr></table>
-      <br><br><br><br>
 <% 
       compareId = buyList.getBuy_id();
        total = 0;

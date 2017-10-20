@@ -36,17 +36,17 @@ public class CartDBBean {
         
         try {
             conn = getConnection();
-            sql = "insert into cart (book_id, buyer,"
-            		+ "book_title,buy_price,buy_count,book_image) "
-            		+ "values (?,?,?,?,?,?)";
+            sql = "insert into cart (cart_id,goods_id, buyer,"
+            		+ "goods_name,buy_price,buy_count,goods_image) "
+            		+ "values (cart_seq.nextval,?,?,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
             
-            pstmt.setInt(1, cart.getBook_id());
+            pstmt.setInt(1, cart.getGoods_id());
             pstmt.setString(2, cart.getBuyer());
-            pstmt.setString(3, cart.getBook_title());
+            pstmt.setString(3, cart.getGoods_name());
             pstmt.setInt(4, cart.getBuy_price());
             pstmt.setByte(5, cart.getBuy_count());
-            pstmt.setString(6, cart.getBook_image());
+            pstmt.setString(6, cart.getGoods_image());
             
             pstmt.executeUpdate();
         }catch(Exception ex) {
@@ -114,11 +114,11 @@ public class CartDBBean {
             	 cart = new CartDataBean();
             	 
             	 cart.setCart_id(rs.getInt("cart_id"));
-            	 cart.setBook_id(rs.getInt("book_id"));
-            	 cart.setBook_title(rs.getString("book_title"));
+            	 cart.setGoods_id(rs.getInt("goods_id"));
+            	 cart.setGoods_name(rs.getString("goods_name"));
             	 cart.setBuy_price(rs.getInt("buy_price"));
             	 cart.setBuy_count(rs.getByte("buy_count")); 
-            	 cart.setBook_image(rs.getString("book_image"));
+            	 cart.setGoods_image(rs.getString("goods_image"));
             	 
             	 lists.add(cart);
 			 }

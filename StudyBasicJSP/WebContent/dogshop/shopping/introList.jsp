@@ -9,6 +9,14 @@
 <head>
 <meta charset="UTF-8">
 <title>goods Shopping Mall</title>
+<style type="text/css">
+.content{
+text-overflow: ellipsis;
+}
+table{
+display: inline;
+
+}</style>
 <link href="../etc/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -34,13 +42,16 @@ for(int i=1; i<=5;i++){
 	}
 	%>
 	<br>
+	<br>
+	<br>
+	<br>
 	<font size="+1"><b><%=goods_kindName %>분류의 최신목록: 
 	<a href="list.jsp?goods_kind=<%=goodsLists[0].getGoods_kind() %>">더보기</a>
 	</b><br></font>
 	<%
 	for(int j=0; j<goodsLists.length;j++){
 		%>
-		<table>
+		<%-- <table>
 			<tr height="30" bgcolor="<%=value_c %>">
 			<td rowspan="4" width="100">
 			<a href = "goodsContent.jsp?goods_id=<%=goodsLists[j].getGoods_id()%>&goods_kind=<%=goodsLists[0].getGoods_kind() %>">
@@ -75,7 +86,33 @@ for(int i=1; i<=5;i++){
 			</tr>
 		</table>
 		<br>
-		<br>
+		<br> --%>
+		<table >
+		<tr bgcolor="<%=value_c %>" width="180">
+			<td width="180" class="content">
+			<a href = "goodsContent.jsp?goods_id=<%=goodsLists[j].getGoods_id()%>&goods_kind=<%=goodsLists[0].getGoods_kind() %>">
+			<img src = "../../imageFile/<%=goodsLists[j].getGoods_image()%>" 
+			border="0" width="180" height="150"></a><br>
+			<font size="+1" class="content"><b>
+			<a  href = "goodsContent.jsp?goods_id=<%=goodsLists[j].getGoods_id()%>&goods_kind=<%=goodsLists[0].getGoods_kind()%>">
+			<%=goodsLists[j].getGoods_name() %></a></b></font><br>
+			
+			<%if(goodsLists[j].getGoods_count()==0){ %>
+			<font color="red"><b>일시 품절</b></font>
+			<%}else{ %>
+			<font><b>구매가능</b></font>
+			<%} %>
+			<br>
+				정가 : 
+				<%=NumberFormat.getInstance().format(goodsLists[j].getGoods_price())%>원<br>
+				판매가 : <b><font color="red" size="+1">
+		<%=NumberFormat.getInstance().format((int)(goodsLists[j].getGoods_price()*((double)(100-
+			goodsLists[j].getDiscount_rate())/100))) %>
+			</font>
+			</b>원
+			</td>
+			</tr>
+		</table>
 		<%
 	}
 	

@@ -3,11 +3,11 @@ package dogshop.shopping;
 public class CartDataBean {
 	private int cart_id;
 	private String buyer;
-	private int book_id;
-	private String book_title;
+	private int goods_id;
+	private String goods_name;
 	private int buy_price;
 	private byte buy_count;
-	private String book_image;
+	private String goods_image;
 
 	public int getCart_id() {
 		return cart_id;
@@ -25,20 +25,20 @@ public class CartDataBean {
 		this.buyer = buyer;
 	}
 
-	public int getBook_id() {
-		return book_id;
+	public int getGoods_id() {
+		return goods_id;
 	}
 
-	public void setBook_id(int book_id) {
-		this.book_id = book_id;
+	public void setGoods_id(int goods_id) {
+		this.goods_id = goods_id;
 	}
 
-	public String getBook_title() {
-		return book_title;
+	public String getGoods_name() {
+		return goods_name;
 	}
 
-	public void setBook_title(String book_title) {
-		this.book_title = book_title;
+	public void setGoods_name(String goods_name) {
+		this.goods_name = goods_name;
 	}
 
 	public int getBuy_price() {
@@ -57,11 +57,12 @@ public class CartDataBean {
 		this.buy_count = buy_count;
 	}
 
-	public String getBook_image() {
-		return book_image;
+	public String getGoods_image() {
+		return goods_image;
 	}
 
-	public void setBook_image(String book_image) {
-		this.book_image = book_image;
+	public void setGoods_image(String goods_image) {
+		this.goods_image = goods_image;
 	}
+
 }

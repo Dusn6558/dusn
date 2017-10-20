@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "ch14.bookshop.shopping.CartDBBean" %>
+<%@ page import = "dogshop.shopping.CartDBBean" %>
 <%@ include file="../etc/color.jspf" %>
 <!DOCTYPE html>
 <html>

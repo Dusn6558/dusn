@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "ch14.bookshop.shopping.CartDataBean" %>
-<%@ page import = "ch14.bookshop.shopping.CartDBBean" %>
+<%@ page import = "dogshop.shopping.CartDataBean" %>
+<%@ page import = "dogshop.shopping.CartDBBean" %>
 <%@ page import = "java.util.List" %>
 <%@ page import = "java.text.NumberFormat" %>
 
 <%@ include file="../etc/color.jspf"%>
 
 <%
- String book_kind = request.getParameter("book_kind");
+ String goods_kind = request.getParameter("goods_kind");
  String buyer = (String)session.getAttribute("id");
 %>
 
 <html>
 <head>
-<title>Book Shopping Mall</title>
+<title>goods Shopping Mall</title>
 <link href="../etc/style.css" rel="stylesheet" type="text/css">
 </head>
 <body bgcolor="<%=bodyback_c%>">
@@ -28,8 +28,8 @@ int total = 0;
 if(session.getAttribute("id")==null){
    response.sendRedirect("shopMain.jsp");        
 }else{
-   CartDBBean bookProcess = CartDBBean.getInstance();
-   count = bookProcess.getListCount(buyer);
+   CartDBBean goodsProcess = CartDBBean.getInstance();
+   count = goodsProcess.getListCount(buyer);
 
    if(count == 0){
 %>
@@ -38,17 +38,17 @@ if(session.getAttribute("id")==null){
      <tr><td >장바구니에 담긴 물품이 없습니다.</td> </tr>
    </table>
      <input type="button" value="쇼핑계속" 
-     onclick="javascript:window.location='list.jsp?book_kind=<%=book_kind%>'">
+     onclick="javascript:window.location='shopMain.jsp'">
 <%
    }else{
-     cartLists = bookProcess.getCart(buyer);
+     cartLists = goodsProcess.getCart(buyer);
  %>
    <h3><b>장바구니</b></h3>
    
    <table> 
      <tr> 
        <td width="50"><b>번호</b></td> 
-       <td width="300"><b>책이름</b></td> 
+       <td width="300"><b>상품 이름</b></td> 
        <td width="100"><b>판매가격</b></td>
        <td width="150"><b>수량</b></td> 
        <td width="150"><b>금액</b></td>
@@ -62,9 +62,9 @@ if(session.getAttribute("id")==null){
      <tr> 
        <td width="50"><%=++number %></td> 
        <td  width="300" align="left">
-         <img src="../../imageFile/<%=cartList.getBook_image()%>" 
+         <img src="../../imageFile/<%=cartList.getGoods_image()%>" 
              border="0" width="30" height="50" align="middle">&nbsp;&nbsp;
-             <%=cartList.getBook_title()%>
+             <%=cartList.getGoods_name()%>
        </td> 
        <td width="100"><%=NumberFormat.getInstance().format(cartList.getBuy_price())%></td>
        <td width="150">
@@ -72,7 +72,7 @@ if(session.getAttribute("id")==null){
         
           <input type="text" name="buy_count" size="5" value="<%=cartList.getBuy_count()%>">
           <input type="hidden" name="cart_id" value="<%=cartList.getCart_id() %>">
-          <input type="hidden" name="book_kind" value="<%=book_kind %>">
+          <input type="hidden" name="goods_kind" value="<%=goods_kind %>">
           <input type="submit" value="수정">
           
             </form>
@@ -82,7 +82,7 @@ if(session.getAttribute("id")==null){
             <%=NumberFormat.getInstance().format(cartList.getBuy_count()*cartList.getBuy_price()) %>
           <input type="button" value="삭제" 
             onclick="javascript:window.location=
-            'cartListDel.jsp?list=<%=cartList.getCart_id()%>&book_kind=<%=book_kind%>'">
+            'cartListDel.jsp?list=<%=cartList.getCart_id()%>&goods_kind=<%=goods_kind%>'">
        </td>
      </tr>
 <%}%>
@@ -97,9 +97,9 @@ if(session.getAttribute("id")==null){
          <input type="button" value="구매하기" 
             onclick="javascript:window.location='buyForm.jsp'">
          <input type="button" value="쇼핑계속" 
-            onclick="javascript:window.location='list.jsp?book_kind=<%=book_kind%>'">
+            onclick="javascript:window.location='list.jsp?goods_kind=<%=goods_kind%>'">
          <input type="button" value="장바구니비우기" 
-            onclick="javascript:window.location='cartListDel.jsp?list=all&book_kind=<%=book_kind%>'">
+            onclick="javascript:window.location='cartListDel.jsp?list=all&goods_kind=<%=goods_kind%>'">
        
        </td>
      </tr>

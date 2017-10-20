@@ -1,6 +1,9 @@
+<%@page import="dogshop.shopping.CustomerDataBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="../etc/color.jspf" %>
+    <%@ page import="dogshop.shopping.CustomerDBBean"%>
+    <%@ page import="dogshop.shopping.CustomerDataBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +13,13 @@
 </head>
 <body bgcolor="#8BBDFF">
 <%
+String id = (String)session.getAttribute("id");
+CustomerDBBean member = CustomerDBBean.getInstance();
+CustomerDataBean members = member.getMember(id);
+String managerId = (String)session.getAttribute("managerId");
 try{
-	if(session.getAttribute("id")==null){%>
-	<a href = "../shopping/list.jsp?book_kind=all">전체목록보기</a>
+	if(session.getAttribute("id")==null&&session.getAttribute("managerId")==null){%>
+	<a href = "../shopping/list.jsp?goods_kind=all">전체목록보기</a>
 	<br><br>
 	<form method="post" action="../shopping/loginPro.jsp">
 		아이디 : <input type="text" name="id" size="15" maxlength="50">
@@ -21,16 +28,26 @@ try{
 	</form>
 	<font color="red">반드시 로그인을 하셔야 서비스를 이용하실 수 있습니다.</font>
 	<br><br>
-	<%}else{ %>
-		<a href = "../shopping/list.jsp?book_kind=all">전체목록보기</a>
-		<a href = "../shopping/cartList.jsp?book_kind=all">장바구니보기</a>
+	<%}else if(session.getAttribute("managerId")==null){ %>
+		<a href = "../shopping/list.jsp?goods_kind=all">전체목록보기</a>
+		<a href = "../shopping/cartList.jsp?goods_kind=all">장바구니보기</a>
 		<a href = "../shopping/buyList.jsp">구매목록보기</a>
 		
 		<br>
 		<br>
-		<b><%=session.getAttribute("id") %></b>님, i-book 에 오신것을 환영합니다^^*
+		<b><%=members.getNick() %></b>님, 멍멍숍 에 오신것을 환영합니다^^*
 		<input type="button" value="로그아웃" 
 		onclick="javascript:window.location='../shopping/logout.jsp'">
+		<%}else{ %>
+			<a href = "../shopping/list.jsp?goods_kind=all">전체목록보기</a>
+			<a href = "../shopping/cartList.jsp?goods_kind=all">장바구니보기</a>
+			<a href = "../shopping/buyList.jsp">구매목록보기</a>
+			<a href = "../manager/managerMain.jsp">관리자 메뉴 가기</a>
+			<br>
+			<br>
+			<b>관리자 구역 입니다</b>
+			<input type="button" value="로그아웃" 
+			onclick="javascript:window.location='../shopping/logout.jsp'">
 		<%}
 }catch(Exception e){
 	e.printStackTrace();

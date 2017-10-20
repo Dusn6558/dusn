@@ -54,41 +54,42 @@ public class CustomerDBBean {
         }
     }
 
-	 public int userCheck(String id, String passwd)
-	 throws Exception {
-		 Connection conn = null;
-         PreparedStatement pstmt = null;
-		 ResultSet rs= null;
-         String dbpasswd="";
-		 int x=-1;
-		 String sql="";
-		 try {
-			conn = getConnection();
-			sql = "select passwd from member where id=?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
-            rs= pstmt.executeQuery();
+    public int userCheck(String id, String passwd)
+    		 throws Exception {
+    			 Connection conn = null;
+    	         PreparedStatement pstmt = null;
+    			 ResultSet rs= null;
+    	         String dbpasswd="";
+    			 int x=-1;
+    	       
+    			 try {
+    				conn = getConnection();
+    	           
+    	            pstmt = conn.prepareStatement(
+    	            	"select passwd from member where id = ?");
+    	            pstmt.setString(1, id);
+    	            rs= pstmt.executeQuery();
 
-			if(rs.next()){
-				dbpasswd= rs.getString("passwd"); 
-				if(dbpasswd.equals(passwd))
-					x= 1;
-				else
-					x= 0;
-			}else
-				x= -1;
-         }catch(Exception ex) {
-        	 ex.printStackTrace();
-         } finally {
-			 if (rs != null) 
-				 try { rs.close(); } catch(SQLException ex) {}
-             if (pstmt != null) 
-            	 try { pstmt.close(); } catch(SQLException ex) {}
-             if (conn != null) 
-            	 try { conn.close(); } catch(SQLException ex) {}
-         }
-		 return x;
-	 }
+    				if(rs.next()){
+    					dbpasswd= rs.getString("passwd"); 
+    					if(dbpasswd.equals(passwd))
+    						x= 1;
+    					else
+    						x= 0;
+    				}else
+    					x= -1;
+    	         }catch(Exception ex) {
+    	        	 ex.printStackTrace();
+    	         } finally {
+    				 if (rs != null) 
+    					 try { rs.close(); } catch(SQLException ex) {}
+    	             if (pstmt != null) 
+    	            	 try { pstmt.close(); } catch(SQLException ex) {}
+    	             if (conn != null) 
+    	            	 try { conn.close(); } catch(SQLException ex) {}
+    	         }
+    			 return x;
+    		 }
 
 	 public int confirmId(String id)
 	 throws Exception {

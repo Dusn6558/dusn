@@ -4,21 +4,23 @@
 <%@ page import = "dogshop.shopping.CartDBBean" %>
 <%@ page import = "dogshop.shopping.CustomerDataBean" %>
 <%@ page import = "dogshop.shopping.CustomerDBBean" %>
-<%@ page import = "dogshop.shopping.bankDBBean" %>
+<%@ page import = "dogshop.shopping.BuyDBBean" %>
 <%@ page import = "java.util.List" %>
 <%@ page import = "java.text.NumberFormat" %>
 
 <%@ include file="../etc/color.jspf"%> 
+
+<%
+   String goods_kind = request.getParameter("goods_kind");
+   String buyer = (String)session.getAttribute("id");
+%>
+
 <html>
 <head>
 <title>goods Shopping Mall</title>
 <link href="../etc/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<%
-   String goods_kind = request.getParameter("goods_kind");
-   String buyer = (String)session.getAttribute("id");
-%>
+<body bgcolor="<%=bodyback_c%>">
 <%
 List<CartDataBean> cartLists = null;
 List<String> accountLists = null;
@@ -26,6 +28,7 @@ CartDataBean cartList = null;
 CustomerDataBean member= null;
 int number = 0;
 int total = 0;
+
 if(session.getAttribute("id")==null){
 	response.sendRedirect("shopMain.jsp");        
 }else{
@@ -35,8 +38,8 @@ if(session.getAttribute("id")==null){
     CustomerDBBean memberProcess = CustomerDBBean.getInstance();
     member = memberProcess.getMember(buyer);
     
-    bankDBBean bankProcess = bankDBBean.getInstance();
-    accountLists = bankProcess.getAccount(buyer);
+    BuyDBBean buyProcess = BuyDBBean.getInstance();
+    accountLists = buyProcess.getAccount(member.getName());
 %>
   <h3><b>구매 목록</b></h3>
 
@@ -44,7 +47,7 @@ if(session.getAttribute("id")==null){
   <table> 
     <tr> 
       <td width="50">번호</td> 
-      <td width="300">책이름</td> 
+      <td width="300">상품 이름</td> 
       <td width="100">판매가격</td>
       <td width="150">수량</td> 
       <td width="150">금액</td>
@@ -72,23 +75,13 @@ if(session.getAttribute("id")==null){
   }
 %>
   <tr>
-    <td colspan="5" align="right"><font size="+1" color="blue">
-    <b>총 구매금액 : <%=NumberFormat.getInstance().format(total)%> 원 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b></font></td>
+    <td colspan="5" align="right"><b>총 구매금액 : <%=NumberFormat.getInstance().format(total)%></b></td>
   </tr>
 </table>
 </form>
 <%} 
  %>
 <br>
-<script type="text/javascript">
-	function selectAccount(name) {
-		var accountList = document.getElementById("accountList").value;
-		var url = name+"?accountList="+accountList
-		javascript:window.location=url;
-	}
-	
-</script>
 <form method="post" action="buyPro.jsp" name="buyinput">
  <table>
    <tr> 
@@ -109,27 +102,15 @@ if(session.getAttribute("id")==null){
    <tr> 
      <td  width="200" align="left">결제계좌</td>
      <td  width="400" align="left">
-       <select name="account" id = "accountList">
+       <select name="account">
         <%
-        String accountList="";
           for(int i=0;i<accountLists.size();i++){
-           accountList = accountLists.get(i);
+           String accountList = accountLists.get(i);
          %>
            <option value="<%=accountList %>"><%=accountList %></option>
         <%}%>
        </select>
     </td>
-  </tr>
-  <tr>
-  	<td colspan="2" align="center" bgcolor="<%=value_c%>">
-  		<input type="button" value="계좌등록" 
-  		onclick="javascript:window.location='insertAccountForm.jsp'">&nbsp;
-  		<input type="button" value="계좌수정"
-  		onclick="selectAccount('updateAccountForm.jsp')">&nbsp;
-  		<input type="button" value="계좌삭제"
-  		onclick="selectAccount('deleteAccountForm.jsp')">&nbsp;
-  	
-  	</td>
   </tr>
   </table>
   <br>
@@ -153,7 +134,7 @@ if(session.getAttribute("id")==null){
   <tr> 
     <td  width="200" align="left">주소</td>
     <td  width="400" align="left">
-      <input type="text" name="deliveryAddess" value="<%=member.getAddress()%>">
+      <input type="text" name="deliveryAddress" value="<%=member.getAddress()%>">
     </td>
   </tr>
    <tr> 
@@ -165,6 +146,5 @@ if(session.getAttribute("id")==null){
    </tr>
   </table>
   </form>
- 
 </body>
 </html>

@@ -11,7 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import ch14.bookshop.master.ShopBookDataBean;
+import dogshop.master.ShopdogDataBean;
 
 public class bankDBBean {
 	private static bankDBBean instance = new bankDBBean();
@@ -27,6 +27,33 @@ public class bankDBBean {
         Context envCtx = (Context) initCtx.lookup("java:comp/env");
         DataSource ds = (DataSource)envCtx.lookup("jdbc/basicjsp");
         return ds.getConnection();
+    }public List<String> getAccount(){
+    	Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<String> accountList = null;
+        try {
+            conn = getConnection();
+                        
+            pstmt = conn.prepareStatement("select * from bank");
+            rs = pstmt.executeQuery();
+            
+            accountList = new ArrayList<String>();
+            
+            while (rs.next()) {
+           	  String account = new String(rs.getString("account")+" "
+                     + rs.getString("bank")+" "+rs.getString("name"));
+           	  accountList.add(account);
+		    }
+        }catch(Exception ex) {
+        	ex.printStackTrace();
+        } finally {
+            if (pstmt != null) 
+            	try { pstmt.close(); } catch(SQLException ex) {}
+            if (conn != null) 
+            	try { conn.close(); } catch(SQLException ex) {}
+        }
+        return accountList;
     }
 	 public void insertAccount(bankDataBean member)throws Exception {
 			    	Connection conn = null;
@@ -50,7 +77,7 @@ public class bankDBBean {
 			            	try { conn.close(); } catch(SQLException ex) {}
 			        }
 			    }
-	public List<String> getAccount(String id) throws Exception{
+	/*public List<String> getAccount(String id) throws Exception{
     	Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -82,7 +109,7 @@ public class bankDBBean {
             	try { conn.close(); } catch(SQLException ex) {}
         }
         return accountList;
-    }
+    }*/
 	public List<bankDataBean> getbankAccount(String id) throws Exception{
 		Connection conn = null;
         PreparedStatement pstmt = null;

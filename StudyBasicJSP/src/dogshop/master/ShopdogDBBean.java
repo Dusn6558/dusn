@@ -189,11 +189,13 @@ public class ShopdogDBBean {
 			conn=getConnection();
 			
 			sql = "select * from "
-					+ "(select reg_date from goods where goods_kind=? order by reg_date desc)"
-					+ " where rownum <= ?";
+					+ "(select rownum as rnum, bo.* "
+					+ "from(select * from goods where goods_kind=? order by reg_date desc) bo)"
+					+ " where rnum between ? and ?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, goods_kind);
-			pstmt.setInt(2, count);
+			pstmt.setInt(2, 0);
+			pstmt.setInt(3, count);
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
