@@ -1,4 +1,4 @@
-//학원 컴퓨터 작업 1111
+//학원 컴퓨터 작업 1111111
 package ch13.board;
 import java.sql.Timestamp;
 
